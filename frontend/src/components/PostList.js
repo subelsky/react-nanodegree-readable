@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import Loading from 'react-loading'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Timestamp from 'react-timestamp'
 import { postsFetchData } from '../actions/posts'
 
 class PostList extends Component {
+  state = {
+    sortValue: 'timestamp'
+  }
+
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
     posts: PropTypes.array.isRequired,
@@ -16,6 +21,10 @@ class PostList extends Component {
     posts: [],
     hasErrored: false,
     isLoading: false
+  }
+
+  handleChange(sortValue) {
+    this.setState({ sortValue })
   }
 
   componentDidMount() {
@@ -37,12 +46,43 @@ class PostList extends Component {
     }
 
     const { posts } = this.props
+    let sortFunc
+
+    if (this.state.sortValue === 'voteScore') {
+      sortFunc = (a,b) => {
+        return a.voteScore <= b.voteScore
+      }
+    } else {
+      sortFunc = (a,b) => {
+        return a.timestamp <= b.timestamp
+      }
+    }
+
+    posts.sort(sortFunc)
 
     return (
-      <div className="row">
+      [(
+      <div key='postTableControls' className="row">
         <div className="col-md">
           <h2>Posts</h2>
-          
+        </div>
+
+        <div className="col-md">
+          <label>
+            Sort By:
+            <select value={this.state.sortValue} onChange={(event) => this.handleChange(event.target.value)}>
+              <option value="voteScore">Vote Score</option>
+              <option value="timestamp">Timestamp</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      ),(
+
+      <div key='postTable' className="row">
+        <div className="col-md">
+
           <table className='table table-striped table-bordered'>
             <thead className='thead-dark'>
               <tr>
@@ -55,15 +95,15 @@ class PostList extends Component {
                 {posts.map((post) => (
                   <tr key={post.id} scope='row'>
                     <td>{post.title}</td>
-                    <td>{post.timestamp}</td>
-                    <td>&mdash;</td>
+                    <td><Timestamp time={post.timestamp/1000} /></td>
+                    <td>{post.voteScore}</td>
                   </tr>
                 ))}
               </tbody>
           </table>
         </div>
       </div>
-    )
+    )])
   }
 }
 
