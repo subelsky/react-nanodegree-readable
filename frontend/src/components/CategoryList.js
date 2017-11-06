@@ -44,6 +44,9 @@ class CategoryList extends Component {
         <div className="col-md">
           <h1>Categories</h1>
           <div className="list-group">
+              <NavLink exact key='/' to='/' className='list-group-item list-group-item-action' activeClassName='active'>
+                All
+              </NavLink>
 
             {categories.map((category) => (
               <NavLink key={category.path} to={'/' + category.path} className='list-group-item list-group-item-action' activeClassName='active'>
