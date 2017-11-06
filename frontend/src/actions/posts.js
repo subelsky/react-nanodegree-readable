@@ -26,11 +26,13 @@ export function postsFetchDataSuccess(posts) {
   }
 }
 
-export function postsFetchData() {
+export function postsFetchData(category) {
   return (dispatch) => {
     dispatch(postsIsLoading(true));
 
-    apiFetch('/posts')
+    const url = (category ? `/${category}/posts/` : '/posts')
+
+    apiFetch(url)
       .then((posts) => {
         dispatch(postsIsLoading(false));
         dispatch(postsFetchDataSuccess(posts))

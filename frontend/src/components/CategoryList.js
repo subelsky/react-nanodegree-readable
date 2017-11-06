@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Loading from 'react-loading'
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { categoriesFetchData } from '../actions/categories'
-
 
 class CategoryList extends Component {
   static propTypes = {
@@ -37,6 +37,8 @@ class CategoryList extends Component {
 
     const { categories } = this.props
 
+    //const baseListItemClass = 'list-group-item list-group-item-action'
+
     return (
       <div className="row">
         <div className="col-md">
@@ -44,11 +46,10 @@ class CategoryList extends Component {
           <div className="list-group">
 
             {categories.map((category) => (
-              <li key={category.name} className="list-group-item list-group-item-action">
-                <a href={category.path}>{category.name}</a>
-              </li>
-            ))
-            }
+              <NavLink key={category.path} to={'/' + category.path} className='list-group-item list-group-item-action' activeClassName='active'>
+                {category.name}
+              </NavLink>
+            ))}
 
           </div>
         </div>

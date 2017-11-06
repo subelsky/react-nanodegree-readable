@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 // Relies on Bootstrap's navbar CSS
 // @see https://getbootstrap.com/docs/4.0/components/navbar/
@@ -6,7 +7,7 @@ import React from 'react';
 const NavBar = () => {
   return (
   <nav className="navbar navbar-dark bg-dark">
-    <a className="navbar-brand" href="#">Readable</a>
+    <Link to='/' className="navbar-brand">Readable</Link>
   </nav>
   )
 }

@@ -6,9 +6,9 @@ import rootReducer from '../reducers'
 // from https://github.com/udacity/reactnd-udacimeals-complete/blob/master/src/index.js
 const logger = store => next => action => {
   console.group(action.type)
-  console.info('dispatching', action)
+  console.debug('DISPATCHING', action)
   let result = next(action)
-  console.log('next state', store.getState())
+  console.debug('NEXT STATE',store.getState())
   console.groupEnd(action.type)
   return result
 }

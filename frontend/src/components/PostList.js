@@ -14,7 +14,10 @@ class PostList extends Component {
     fetchData: PropTypes.func.isRequired,
     posts: PropTypes.array.isRequired,
     hasErrored: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.object.isRequired
+    })
   }
 
   static defaultProps = {
@@ -28,9 +31,18 @@ class PostList extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchData()
+    const { category } = this.props.match.params
+    this.props.fetchData(category)
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { category } = nextProps.match.params
+
+    if (category !== this.props.match.params.category) {
+      this.props.fetchData(category)
+    }
+  }
+  
   // structure based on https://github.com/stowball/dummys-guide-to-redux-and-thunk-react/blob/master/src/components/ItemList.js
   render() {
     if (this.props.hasErrored) { 
@@ -93,7 +105,7 @@ class PostList extends Component {
               </thead>
               <tbody>
                 {posts.map((post) => (
-                  <tr key={post.id} scope='row'>
+                  <tr key={post.id}>
                     <td>{post.title}</td>
                     <td><Timestamp time={post.timestamp/1000} /></td>
                     <td>{post.voteScore}</td>
@@ -117,7 +129,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: () => dispatch(postsFetchData())
+    fetchData: (category) => dispatch(postsFetchData(category))
   }
 };
 
