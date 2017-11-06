@@ -37,20 +37,20 @@ class CategoryList extends Component {
 
     const { categories } = this.props
 
-    console.info('PPROPS',this.props)
     return (
       <div className="row">
         <div className="col-md">
-          <ul className="list-group">
+          <h1>Categories</h1>
+          <div className="list-group">
 
-          {categories.map((category) => (
-            <li className="list-group-item">
-              <a key={category.name} href={category.path}>{category.name}</a>
-            </li>
-          ))
-          }
+            {categories.map((category) => (
+              <li key={category.name} className="list-group-item list-group-item-action">
+                <a href={category.path}>{category.name}</a>
+              </li>
+            ))
+            }
 
-          </ul>
+          </div>
         </div>
       </div>
     )
