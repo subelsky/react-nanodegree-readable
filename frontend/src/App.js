@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import NavBar from './shared/NavBar'
-import CategoryList from './components/CategoryList'
-import PostList from './components/PostList'
+import PostViewContainer from './components/PostViewContainer'
+import PostViewDetail from './components/PostViewDetail'
 import './App.css'
 
 class App extends Component {
@@ -14,10 +14,11 @@ class App extends Component {
     return (
       [
         <NavBar key='navbar'></NavBar>,
-
         <main key='main' role="main" className="container-fluid">
-          <Route path="/:category?" component={CategoryList} />
-          <Route path="/:category?" component={PostList} />
+          <Switch>
+            <Route path="/posts/:viewPostId" component={PostViewDetail} />
+            <Route component={PostViewContainer} />
+          </Switch>
         </main>
       ]
     );

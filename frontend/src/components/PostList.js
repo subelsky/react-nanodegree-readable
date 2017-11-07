@@ -106,7 +106,7 @@ class PostList extends Component {
               <tbody>
                 {posts.map((post) => (
                   <tr key={post.id}>
-                    <td>{post.title}</td>
+                    <td><a href={'/posts/' + post.id}>{post.title}</a></td>
                     <td><Timestamp time={post.timestamp/1000} /></td>
                     <td>{post.voteScore}</td>
                   </tr>
@@ -131,6 +131,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: (category) => dispatch(postsFetchData(category))
   }
-};
+}
 
-export default connect(mapStateToProps,mapDispatchToProps)(PostList);
+export default connect(mapStateToProps,mapDispatchToProps)(PostList)

@@ -1,4 +1,3 @@
-// originally based on https://codepen.io/stowball/post/a-dummy-s-guide-to-redux-and-thunk-in-react
 import { apiFetch } from '../utils/api'
 
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
