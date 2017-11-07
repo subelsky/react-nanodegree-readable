@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import Loading from 'react-loading'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { postFetchData } from '../actions/post'
 import PostViewHeader from './PostViewHeader'
 import PostViewBody from './PostViewBody'
+import CommentListContainer from './CommentListContainer'
 
 //should list all of the comments for that post, ordered by voteScore (highest first)
 //should have controls to edit or delete the post
@@ -50,7 +50,8 @@ class PostViewDetail extends Component {
 
     return ([
       <PostViewHeader key={'PostViewHeader' + id} {...headerProps} />,
-      <PostViewBody key={'PostViewBody' + id} body={body} />
+      <PostViewBody key={'PostViewBody' + id} body={body} />,
+      <CommentListContainer key={'CommentListContainer' + id} postId={id} />
     ])
   }
 }

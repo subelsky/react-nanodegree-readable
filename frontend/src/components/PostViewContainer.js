@@ -5,8 +5,8 @@ import PostList from './PostList'
 
 const PostViewContainer = () => {
   return ([
-    <Route path="/:category?" component={CategoryList} />,
-    <Route path="/:category?" component={PostList} />
+    <Route key='categoryList' path="/:category?" component={CategoryList} />,
+    <Route key='postList' path="/:category?" component={PostList} />
   ])
 }
 
