@@ -43,15 +43,14 @@ class CommentListContainer extends Component {
 
     const { comments } = this.props
 
+    comments.sort((a,b) => a.voteScore <= b.voteScore)
+
     return (
       <div className='row'>
         <div className='col-md'>
-          <table className='table table-bordered table-striped'>
-            <caption>Comments for this post</caption>
-            <tbody>
-              {comments.map((c) => <CommentDetailRow key={c.id} {...c} />)}
-            </tbody>
-          </table>
+          <ul className='list-group'>
+            {comments.map((c) => <CommentDetailRow key={c.id} {...c} />)}
+          </ul>
         </div>
       </div>
     )

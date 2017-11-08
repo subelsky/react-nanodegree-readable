@@ -1,16 +1,33 @@
+const baseUrl = 'http://localhost:3001'
+
+const headers = { 
+  'Authorization': 'TEST' ,
+  'Content-Type': 'application/json'
+}
+
 export function apiFetch(path) {
-  const url = `http://localhost:3001${path}`
+  const url = `${baseUrl}${path}`
 
-  return fetch(url,{
-    headers: { 
-      'Authorization': 'TEST' 
-    },
-  }).then((response) => {
-    if (!response.ok) {
-      throw Error(response.statusText)
-    }
+  return fetch(url,{ headers })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
 
-    return response
-  }).then((response) => response.json())
+      return response
+    }).then((response) => response.json())
+}
+
+export function apiPost(path,body) {
+  const url = `${baseUrl}${path}`
+
+  return fetch(url,{ method: 'POST', body, headers })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+
+      return response
+    }).then((response) => response.json())
 }
 

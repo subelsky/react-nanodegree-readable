@@ -2,7 +2,7 @@ import React from 'react'
 import Timestamp from 'react-timestamp'
 import PropTypes from 'prop-types'
 
-const PostViewHeader = ({ title, author, timestamp, voteScore }) => (
+const PostViewHeader = ({ title, author, timestamp, voteScore, commentCount }) => (
   <div className='row'>
     <div className='col-md'>
       <table className='table table-bordered'>
@@ -11,6 +11,7 @@ const PostViewHeader = ({ title, author, timestamp, voteScore }) => (
           <tr><th scope='row'>Author</th><td>{author}</td></tr>
           <tr><th scope='row'>Timestamp</th><td><Timestamp time={timestamp/1000} /></td></tr>
           <tr><th scope='row'>Vote Score</th><td>{voteScore}</td></tr>
+          <tr><th scope='row'># Comments</th><td>{commentCount}</td></tr>
         </tbody>
       </table>
     </div>

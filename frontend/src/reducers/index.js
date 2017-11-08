@@ -3,6 +3,7 @@ import { categories, categoriesHasErrored, categoriesIsLoading } from './categor
 import { post, postHasErrored, postIsLoading } from './post'
 import { posts, postsHasErrored, postsIsLoading } from './posts'
 import { comments, commentsHasErrored, commentsIsLoading } from './comments'
+import { comment } from './comment'
 
 export default combineReducers({
   categories,
@@ -16,6 +17,8 @@ export default combineReducers({
   posts,
   postsHasErrored,
   postsIsLoading,
+
+  comment,
 
   comments,
   commentsHasErrored,

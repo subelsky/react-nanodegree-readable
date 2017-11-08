@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 const PostViewBody = ({ body }) => (
   <div className='row'>
     <div className='col-md'>
-      {body}
+      <p className='lead'>
+        {body}
+      </p>
     </div>
   </div>
 )
