@@ -13,7 +13,7 @@ class PostList extends Component {
 
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
-    posts: PropTypes.array.isRequired,
+    posts: PropTypes.object.isRequired,
     hasErrored: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     match: PropTypes.shape({
