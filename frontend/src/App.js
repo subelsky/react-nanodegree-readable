@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import NavBar from './shared/NavBar'
 import PostViewContainer from './components/PostViewContainer'
-import PostViewDetail from './components/PostViewDetail'
+import PostListContainer from './components/PostListContainer'
 import './App.css'
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
         <NavBar key='navbar'></NavBar>,
         <main key='main' role="main" className="container-fluid">
           <Switch>
-            <Route path="/posts/:viewPostId" component={PostViewDetail} />
+            <Route path="/posts/:viewPostId" component={PostListContainer} />
             <Route component={PostViewContainer} />
           </Switch>
         </main>

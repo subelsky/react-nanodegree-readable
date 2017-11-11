@@ -6,13 +6,7 @@ import PostViewHeader from './PostViewHeader'
 import PostViewBody from './PostViewBody'
 import CommentListContainer from './CommentListContainer'
 
-//should list all of the comments for that post, ordered by voteScore (highest first)
-//should have controls to edit or delete the post
-//should have a control to add a new comment.
-//implement comment form however you want (inline, modal, etc.)
-//comments should also have controls for editing or deleting
-
-class PostViewDetail extends Component {
+class PostListContainer extends Component {
   static PropTypes = {
     match: PropTypes.shape({
       params: PropTypes.object.isRequired
@@ -65,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
   return {}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PostViewDetail)
+export default connect(mapStateToProps,mapDispatchToProps)(PostListContainer)
