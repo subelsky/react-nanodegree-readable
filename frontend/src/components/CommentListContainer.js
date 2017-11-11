@@ -9,13 +9,13 @@ class CommentListContainer extends Component {
   static propTypes = {
     postId: PropTypes.string,
     fetchData: PropTypes.func,
-    comments: PropTypes.array,
+    comments: PropTypes.object,
     hasErrored: PropTypes.bool,
     isLoading: PropTypes.bool
   }
 
   static defaultProps = {
-    comments: [],
+    comments: {},
     hasErrored: false,
     isLoading: false
   }
@@ -43,13 +43,14 @@ class CommentListContainer extends Component {
 
     const { comments } = this.props
 
-    comments.sort((a,b) => a.voteScore <= b.voteScore)
+    let commentIds = Object.keys(comments)
+    commentIds.sort((id_a,id_b) => comments[id_a].voteScore >= comments[id_b].voteScore)
 
     return (
       <div className='row'>
         <div className='col-md'>
           <ul className='list-group'>
-            {comments.map((c) => <CommentDetailRow key={c.id} {...c} />)}
+            {commentIds.map((id) => <CommentDetailRow key={id} {...comments[id]} />)}
           </ul>
         </div>
       </div>
@@ -58,17 +59,15 @@ class CommentListContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
+  return ({
     comments: state.comments,
     hasErrored: state.commentsHasErrored,
     isLoading: state.commentsIsLoading
-  }
+  })
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: (postId) => dispatch(commentsFetchData(postId))
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: (postId) => dispatch(commentsFetchData(postId))
+})
 
 export default connect(mapStateToProps,mapDispatchToProps)(CommentListContainer)

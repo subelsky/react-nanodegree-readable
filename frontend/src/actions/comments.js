@@ -1,8 +1,9 @@
-import { apiFetch } from '../utils/api'
+import { apiFetch, apiPost } from '../utils/api'
 
 export const COMMENTS_HAS_ERRORED = 'COMMENTS_HAS_ERRORED'
 export const COMMENTS_IS_LOADING = 'COMMENTS_IS_LOADING'
 export const COMMENTS_FETCH_DATA_SUCCESS = 'COMMENTS_FETCH_DATA_SUCCESS'
+export const COMMENT_UPDATE_SCORE_SUCCESS = 'COMMENT_UPDATE_SCORE_SUCCESS'
 
 export function commentsHasErrored(bool) {
   return {
@@ -25,6 +26,13 @@ export function commentsFetchDataSuccess(comments) {
   }
 }
 
+export function commentUpdateScoreSuccess(comment) {
+  return {
+    type: COMMENT_UPDATE_SCORE_SUCCESS,
+    comment
+  }
+}
+
 export function commentsFetchData(postId) {
   return (dispatch) => {
     dispatch(commentsIsLoading(true));
@@ -37,5 +45,17 @@ export function commentsFetchData(postId) {
         dispatch(commentsFetchDataSuccess(comments))
       })
       .catch(() => dispatch(commentsHasErrored(true)));
+  }
+}
+
+export function commentUpdateScore(commentId,option) {
+  return (dispatch) => {
+    const url = `/comments/${commentId}/`
+    const body = JSON.stringify({ option })
+
+    apiPost(url,body)
+      .then((comment) => {
+        dispatch(commentUpdateScoreSuccess(comment))
+      })
   }
 }

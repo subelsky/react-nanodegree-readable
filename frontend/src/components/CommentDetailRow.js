@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Timestamp from 'react-timestamp'
-import { commentUpdateScore } from '../actions/comment'
+import { commentUpdateScore } from '../actions/comments'
 import FaChevronCircleUp from 'react-icons/lib/fa/chevron-circle-up'
 import FaChevronCircleDown from 'react-icons/lib/fa/chevron-circle-down'
 import { connect } from 'react-redux'
@@ -38,14 +38,10 @@ class CommentDetailRow extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { ...state.comment }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     updateScore: (commentId,option) => dispatch(commentUpdateScore(commentId,option))
   }
 }
   
-export default connect(mapStateToProps,mapDispatchToProps)(CommentDetailRow)
+export default connect(() => ({}),mapDispatchToProps)(CommentDetailRow)
