@@ -3,8 +3,29 @@
 import { 
   POSTS_HAS_ERRORED, 
   POSTS_IS_LOADING, 
-  POSTS_FETCH_DATA_SUCCESS 
+  POSTS_FETCH_DATA_SUCCESS ,
+  POST_HAS_ERRORED, 
+  POST_IS_LOADING, 
+  POST_FETCH_DATA_SUCCESS 
 } from '../actions/posts'
+
+export function postHasErrored(state = false,action) {
+  switch (action.type) {
+    case POST_HAS_ERRORED:
+      return action.hasErrored
+    default:
+      return state
+  }
+}
+
+export function postIsLoading(state = false,action) {
+  switch (action.type) {
+    case POST_IS_LOADING:
+      return action.isLoading
+    default:
+      return state
+  }
+}
 
 export function postsHasErrored(state = false,action) {
   switch (action.type) {
@@ -24,10 +45,22 @@ export function postsIsLoading(state = false,action) {
   }
 }
 
-export function posts(state = [],action) {
+export function posts(state = {},action) {
   switch (action.type) {
     case POSTS_FETCH_DATA_SUCCESS:
-      return action.posts
+      const posts = action.posts.reduce((map,p) => {
+        map[p.id] = p
+        return map
+      },{})
+
+      return posts
+    case POST_FETCH_DATA_SUCCESS:
+      const { post } = action
+
+      return {
+        ...state, 
+          [post.id]: post
+      }
     default:
       return state
   }

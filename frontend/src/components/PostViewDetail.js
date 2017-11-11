@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Loading from 'react-loading'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { postFetchData } from '../actions/post'
 import PostViewHeader from './PostViewHeader'
 import PostViewBody from './PostViewBody'
 import CommentListContainer from './CommentListContainer'
@@ -28,11 +27,6 @@ class PostViewDetail extends Component {
     isLoading: false
   }
 
-  componentDidMount() {
-    const { viewPostId } = this.props.match.params
-    this.props.fetchData(viewPostId)
-  }
-
   render() {
     if (this.props.hasErrored) { 
       return (
@@ -56,18 +50,19 @@ class PostViewDetail extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state,ownProps) => {
+  const { viewPostId } = ownProps.match.params
+  const post = state.posts[viewPostId]
+
   return {
-    post: state.post,
+    post,
     hasErrored: state.hasErrored,
     isLoading: state.isLoading
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: (viewPostId) => dispatch(postFetchData(viewPostId))
-  }
+  return {}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(PostViewDetail)

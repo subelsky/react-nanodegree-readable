@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Loading from 'react-loading'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Timestamp from 'react-timestamp'
@@ -57,20 +58,22 @@ class PostList extends Component {
       return <Loading delay={200} type='spin' color='#222' className='loading' />
     }
 
-    const { posts } = this.props
     let sortFunc
 
     if (this.state.sortValue === 'voteScore') {
-      sortFunc = (a,b) => {
-        return a.voteScore <= b.voteScore
+      sortFunc = (postIdA,postIdB) => {
+        return posts[postIdA].voteScore <= posts[postIdB].voteScore
       }
     } else {
-      sortFunc = (a,b) => {
-        return a.timestamp <= b.timestamp
+      sortFunc = (postIdA,postIdB) => {
+        return posts[postIdA].timestamp <= posts[postIdB].timestamp
       }
     }
 
-    posts.sort(sortFunc)
+    const { posts } = this.props
+    let postIds = Object.keys(posts)
+    postIds.sort(sortFunc)
+    const sortedPosts = postIds.map((postId) => posts[postId])
 
     return (
       [(
@@ -104,9 +107,13 @@ class PostList extends Component {
               </tr>
               </thead>
               <tbody>
-                {posts.map((post) => (
+                {sortedPosts.map((post) => (
                   <tr key={post.id}>
-                    <td><a href={'/posts/' + post.id}>{post.title}</a></td>
+                    <td>
+                      <NavLink key={post.id + 'PostLink'} to={'/posts/' + post.id}>
+                        {post.title}
+                      </NavLink>
+                    </td>
                     <td><Timestamp time={post.timestamp/1000} /></td>
                     <td>{post.voteScore}</td>
                   </tr>
