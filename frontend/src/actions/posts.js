@@ -1,4 +1,4 @@
-import { apiFetch } from '../utils/api'
+import { apiFetch, apiPost } from '../utils/api'
 
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
@@ -7,6 +7,8 @@ export const POSTS_FETCH_DATA_SUCCESS = 'POSTS_FETCH_DATA_SUCCESS'
 export const POST_HAS_ERRORED = 'POST_HAS_ERRORED'
 export const POST_IS_LOADING = 'POST_IS_LOADING'
 export const POST_FETCH_DATA_SUCCESS = 'POST_FETCH_DATA_SUCCESS'
+
+export const POST_UPDATE_SUCCESS = 'POST_UPDATE_SUCCESS'
 
 export function postHasErrored(bool) {
   return {
@@ -65,6 +67,13 @@ export function postsFetchDataSuccess(posts) {
   }
 }
 
+export function postUpdateSuccess(post) {
+  return {
+    type: POST_UPDATE_SUCCESS,
+    post
+  }
+}
+
 export function postsFetchData(category = null) {
   return (dispatch) => {
     dispatch(postsIsLoading(true));
@@ -77,5 +86,17 @@ export function postsFetchData(category = null) {
         dispatch(postsFetchDataSuccess(posts))
       })
       .catch(() => dispatch(postsHasErrored(true)));
+  }
+}
+
+export function postUpdateScore(postId,option) {
+  return (dispatch) => {
+    const url = `/posts/${postId}/`
+    const body = JSON.stringify({ option })
+
+    apiPost(url,body)
+      .then((post) => {
+        dispatch(postUpdateSuccess(post))
+      })
   }
 }

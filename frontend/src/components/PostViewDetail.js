@@ -43,7 +43,7 @@ class PostViewDetail extends Component {
     const { id, body, ...headerProps } = this.props.post
 
     return ([
-      <PostViewHeader key={'PostViewHeader' + id} {...headerProps} />,
+      <PostViewHeader key={'PostViewHeader' + id} id={id} {...headerProps} />,
       <PostViewBody key={'PostViewBody' + id} body={body} />,
       <CommentListContainer key={'CommentListContainer' + id} postId={id} />
     ])

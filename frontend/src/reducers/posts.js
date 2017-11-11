@@ -6,7 +6,7 @@ import {
   POSTS_FETCH_DATA_SUCCESS ,
   POST_HAS_ERRORED, 
   POST_IS_LOADING, 
-  POST_FETCH_DATA_SUCCESS 
+  POST_UPDATE_SUCCESS
 } from '../actions/posts'
 
 export function postHasErrored(state = false,action) {
@@ -54,13 +54,14 @@ export function posts(state = {},action) {
       },{})
 
       return posts
-    case POST_FETCH_DATA_SUCCESS:
-      const { post } = action
+    case POST_UPDATE_SUCCESS:
+      const post = action.post
 
       return {
         ...state, 
           [post.id]: post
       }
+
     default:
       return state
   }
