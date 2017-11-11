@@ -31,3 +31,15 @@ export function apiPost(path,body) {
     }).then((response) => response.json())
 }
 
+export function apiDelete(path) {
+  const url = `${baseUrl}${path}`
+
+  return fetch(url,{ method: 'DELETE', headers })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+
+      return response
+    }).then((response) => response.json())
+}

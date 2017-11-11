@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Timestamp from 'react-timestamp'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { postUpdateScore } from '../actions/posts'
+import { postUpdateScore, postDelete } from '../actions/posts'
+import { NavLink } from 'react-router-dom'
 import FaChevronCircleUp from 'react-icons/lib/fa/chevron-circle-up'
 import FaChevronCircleDown from 'react-icons/lib/fa/chevron-circle-down'
 
@@ -12,10 +13,11 @@ class PostViewHeader extends Component {
     author: PropTypes.string.isRequired,
     timestamp: PropTypes.number.isRequired,
     voteScore: PropTypes.number.isRequired,
+    deleted: PropTypes.bool.isRequired
   }
 
   render() {
-    const { title, author, timestamp, voteScore, commentCount } = this.props
+    const { id, title, author, timestamp, voteScore, commentCount, deleted } = this.props
 
     return (
     <div className='row'>
@@ -38,6 +40,27 @@ class PostViewHeader extends Component {
               </td>
             </tr>
             <tr><th scope='row'># Comments</th><td>{commentCount}</td></tr>
+            <tr>
+              <th scope='row'>Deleted</th>
+              <td>
+                <span className={deleted ? 'alert alert-danger' : ''}>
+                  {deleted ? 'Yes' : 'No'}
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th scope='row'>Actions</th>
+              <td>
+                <div className="btn-group" role="group">
+                  <NavLink key={'edit' + id} to={`/posts/${id}/edit`} className={'btn btn-info' + (deleted ? ' disabled' : '')}>
+                    Edit
+                  </NavLink>
+                  <button disabled={!!deleted} onClick={() => this.props.delete()} className='btn btn-danger'>
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -51,7 +74,8 @@ const mapDispatchToProps = (dispatch,ownProps) => {
 
   return {
     upVote:   () => dispatch(postUpdateScore(id,'upVote')),
-    downVote: () => dispatch(postUpdateScore(id,'downVote'))
+    downVote: () => dispatch(postUpdateScore(id,'downVote')),
+    delete:   () => dispatch(postDelete(id,`/posts/${id}`))
   }
 }
   

@@ -72,7 +72,9 @@ class PostList extends Component {
 
     const { posts } = this.props
     let postIds = Object.keys(posts)
-    postIds.sort(sortFunc)
+    const visiblePostIds = postIds.filter((postId) => posts[postId].deleted !== true)
+
+    visiblePostIds.sort(sortFunc)
     const sortedPosts = postIds.map((postId) => posts[postId])
 
     return (

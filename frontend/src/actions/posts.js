@@ -1,4 +1,4 @@
-import { apiFetch, apiPost } from '../utils/api'
+import { apiFetch, apiPost, apiDelete } from '../utils/api'
 
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
@@ -95,6 +95,17 @@ export function postUpdateScore(postId,option) {
     const body = JSON.stringify({ option })
 
     apiPost(url,body)
+      .then((post) => {
+        dispatch(postUpdateSuccess(post))
+      })
+  }
+}
+
+export function postDelete(postId,redirectPath) {
+  return (dispatch) => {
+    const url = `/posts/${postId}/`
+
+    apiDelete(url)
       .then((post) => {
         dispatch(postUpdateSuccess(post))
       })
