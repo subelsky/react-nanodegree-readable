@@ -37,19 +37,15 @@ class CategoryList extends Component {
 
     const { categories } = this.props
 
-    //const baseListItemClass = 'list-group-item list-group-item-action'
+    const currentCategory = this.props.match.params.category
 
     return (
       <div className="row">
         <div className="col-md">
           <h1>Categories</h1>
           <div className="list-group">
-              <NavLink exact key='/' to='/' className='list-group-item list-group-item-action' activeClassName='active'>
-                All
-              </NavLink>
-
             {categories.map((category) => (
-              <NavLink key={category.path} to={'/' + category.path} className='list-group-item list-group-item-action' activeClassName='active'>
+              <NavLink key={category.path} to={'/' + (category.path === currentCategory ? '' : category.path)} className='list-group-item list-group-item-action' activeClassName='active'>
                 {category.name}
               </NavLink>
             ))}
