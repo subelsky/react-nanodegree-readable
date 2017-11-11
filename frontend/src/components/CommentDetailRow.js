@@ -16,7 +16,7 @@ class CommentDetailRow extends Component {
   }
 
   render() {
-    const { id, timestamp, body, author, voteScore } = this.props
+    const { timestamp, body, author, voteScore } = this.props
 
     return (
       <li className='list-group-item'>
@@ -25,10 +25,10 @@ class CommentDetailRow extends Component {
           {author} at <Timestamp time={timestamp/1000} />.
         </footer>
         <div>
-          <button onClick={() => this.props.updateScore(id,'upVote')}>
+          <button onClick={() => this.props.upVote()}>
             <FaChevronCircleUp />
           </button>
-          <button onClick={() => this.props.updateScore(id,'downVote')}>
+          <button onClick={() => this.props.downVote()}>
             <FaChevronCircleDown />
           </button>
           <span className="badge badge-pill badge-primary">{voteScore}</span> points
@@ -38,10 +38,14 @@ class CommentDetailRow extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
+  const { id } = ownProps
+
   return {
-    updateScore: (commentId,option) => dispatch(commentUpdateScore(commentId,option))
+    upVote:   () => dispatch(commentUpdateScore(id,'upVote')),
+    downVote: () => dispatch(commentUpdateScore(id,'downVote'))
   }
 }
+
   
 export default connect(() => ({}),mapDispatchToProps)(CommentDetailRow)
