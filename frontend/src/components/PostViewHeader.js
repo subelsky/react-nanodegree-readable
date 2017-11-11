@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch,ownProps) => {
   return {
     upVote:   () => dispatch(postUpdateScore(id,'upVote')),
     downVote: () => dispatch(postUpdateScore(id,'downVote')),
-    delete:   () => dispatch(postDelete(id,`/posts/${id}`))
+    delete:   () => dispatch(postDelete(id))
   }
 }
   

@@ -101,7 +101,7 @@ export function postUpdateScore(postId,option) {
   }
 }
 
-export function postDelete(postId,redirectPath) {
+export function postDelete(postId) {
   return (dispatch) => {
     const url = `/posts/${postId}/`
 
