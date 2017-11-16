@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Loading from 'react-loading'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { commentsFetchData } from '../actions/comments'
 import CommentDetailRow from './CommentDetailRow'
 
 class CommentListContainer extends Component {
@@ -18,14 +17,6 @@ class CommentListContainer extends Component {
     comments: {},
     hasErrored: false,
     isLoading: false
-  }
-
-  componentDidMount() {
-    const { postId } = this.props
-
-    if (postId) {
-      this.props.fetchData(postId)
-    }
   }
 
   render() {
@@ -66,8 +57,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchData: (postId) => dispatch(commentsFetchData(postId))
-})
-
-export default connect(mapStateToProps,mapDispatchToProps)(CommentListContainer)
+export default connect(mapStateToProps)(CommentListContainer)

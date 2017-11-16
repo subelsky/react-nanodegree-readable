@@ -1,4 +1,4 @@
-import { apiFetch, apiPost, apiDelete } from '../utils/api'
+import { apiFetch, apiPost, apiPut, apiDelete } from '../utils/api'
 
 export const COMMENTS_HAS_ERRORED = 'COMMENTS_HAS_ERRORED'
 export const COMMENTS_IS_LOADING = 'COMMENTS_IS_LOADING'
@@ -60,6 +60,19 @@ export function commentUpdateScore(commentId,option) {
   }
 }
 
+export function commentUpdate(commentId,comment) {
+  return (dispatch) => {
+    const url = `/comments/${commentId}/`
+    const { body } = comment
+    const timestamp = Date.now() / 1000 | 0
+    const data = JSON.stringify({ timestamp, body })
+
+    apiPut(url,data)
+      .then((comment) => {
+        dispatch(commentUpdateSuccess(comment))
+      })
+  }
+}
 export function commentDelete(commentId) {
   return (dispatch) => {
     const url = `/comments/${commentId}/`
