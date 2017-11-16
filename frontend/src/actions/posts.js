@@ -1,4 +1,4 @@
-import { apiFetch, apiPost, apiDelete } from '../utils/api'
+import { apiFetch, apiPost, apiDelete, apiPut } from '../utils/api'
 
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
@@ -106,6 +106,19 @@ export function postDelete(postId) {
     const url = `/posts/${postId}/`
 
     apiDelete(url)
+      .then((post) => {
+        dispatch(postUpdateSuccess(post))
+      })
+  }
+}
+
+export function postUpdate(postId,post) {
+  return (dispatch) => {
+    const url = `/posts/${postId}/`
+    const { title, body } = post
+    const data = JSON.stringify({ title, body })
+
+    apiPut(url,data)
       .then((post) => {
         dispatch(postUpdateSuccess(post))
       })

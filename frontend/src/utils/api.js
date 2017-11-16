@@ -43,3 +43,16 @@ export function apiDelete(path) {
       return response
     }).then((response) => response.json())
 }
+
+export function apiPut(path,body) {
+  const url = `${baseUrl}${path}`
+
+  return fetch(url,{ method: 'PUT', headers, body })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+
+      return response
+    }).then((response) => response.json())
+}

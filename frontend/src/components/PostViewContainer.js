@@ -13,6 +13,8 @@ class PostViewContainer extends Component {
     }).isRequired,
 
     post: PropTypes.object.isRequired,
+    hasErrored: PropTypes.bool.required,
+    isLoading: PropTypes.bool.required
   }
 
   static defaultProps = {

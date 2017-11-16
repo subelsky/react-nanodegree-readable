@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import NavBar from './shared/NavBar'
 import PostViewContainer from './components/PostViewContainer'
 import PostListContainer from './components/PostListContainer'
+import PostEditView from './components/PostEditView'
 import './App.css'
 
 class App extends Component {
@@ -16,8 +17,9 @@ class App extends Component {
         <NavBar key='navbar'></NavBar>,
         <main key='main' role="main" className="container-fluid">
           <Switch>
-            <Route path="/posts/:viewPostId" component={PostListContainer} />
-            <Route component={PostViewContainer} />
+            <Route path="/posts/:viewPostId/edit" component={PostEditView} />
+            <Route path="/posts/:viewPostId" component={PostViewContainer} />
+            <Route component={PostListContainer} />
           </Switch>
         </main>
       ]
