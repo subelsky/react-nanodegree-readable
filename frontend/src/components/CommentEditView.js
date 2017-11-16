@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { commentUpdate } from '../actions/comments'
 import CommentForm from './CommentForm'
 
-class commentEditView extends Component {
-  static PropTypes = {
-    comment: PropTypes.object.isRequired
-  }
+class CommentEditView extends Component {
+  constructor(props) {
+    super(props)
 
-  static defaultProps = {
-    comment: {}
+    this.state = {
+      fireRedirect: false,
+      comment: props.comment
+    }
   }
 
   handleChange(event) {
     const field = event.target.id
-    const comment = this.props.comment
+    const comment = this.state.comment
     const value = event.target.value
 
     comment[field] = value
@@ -24,15 +26,22 @@ class commentEditView extends Component {
 
   handleSave(event) {
     this.props.update(this.props.comment)
+    this.setState({ fireRedirect: true })
     event.preventDefault()
   }
 
   render() {
+    const { fireRedirect } = this.state
+
+    if (fireRedirect) {
+      return <Redirect to={`/posts/${this.state.comment.parentId}`} />
+    }
+
     return (
       <CommentForm 
         onChange={(e) => this.handleChange(e)}
         onSave={(e) => this.handleSave(e)} 
-        { ...this.props.comment } />
+        { ...this.state.comment } />
     )
   }
 }
@@ -52,4 +61,4 @@ const mapDispatchToProps = (dispatch,ownProps) => {
   }
 }
   
-export default connect(mapStateToProps,mapDispatchToProps)(commentEditView)
+export default connect(mapStateToProps,mapDispatchToProps)(CommentEditView)

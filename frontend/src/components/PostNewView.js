@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { postCreate } from '../actions/posts'
 import PostForm from './PostForm'
 
 class PostNewView extends Component {
-  static PropTypes = {
-    post: PropTypes.object.isRequired
-  }
-
-  static defaultProps = {
+  state = {
+    fireRedirect: false,
     post: {}
   }
 
   handleFieldChange(event) {
     const field = event.target.id
-    const post = this.props.post
+    const post = this.state.post
     const value = event.target.value
 
     post[field] = value
@@ -23,16 +21,25 @@ class PostNewView extends Component {
   }
 
   handleSave(event) {
-    this.props.create(this.props.post)
+    this.props.create(this.state.post)
+    this.setState({ 
+      fireRedirect: true
+    })
     event.preventDefault()
   }
   
   render() {
+    const { fireRedirect } = this.state
+
+    if (fireRedirect) {
+      return <Redirect to={'/'} />
+    }
+
     return (
       <PostForm 
         handleFieldChange={(e) => this.handleFieldChange(e)} 
         handleSave={(e) => this.handleSave(e)} 
-        {...this.props.post} />
+        {...this.state.post} />
     )
   }
 }

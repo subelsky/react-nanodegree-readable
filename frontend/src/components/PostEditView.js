@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { postUpdate } from '../actions/posts'
 import PostForm from './PostForm'
 
 class PostEditView extends Component {
-  static PropTypes = {
-    post: PropTypes.object.isRequired
-  }
+  constructor(props) {
+    super(props)
 
-  static defaultProps = {
-    post: {}
+    this.state = {
+      fireRedirect: false,
+      post: props.post
+    }
   }
 
   handleFieldChange(event) {
     const field = event.target.id
-    const post = this.props.post
+    const post = this.state.post
     const value = event.target.value
 
     post[field] = value
@@ -24,15 +26,22 @@ class PostEditView extends Component {
 
   handleSave(event) {
     this.props.update(this.props.post)
+    this.setState({ fireRedirect: true })
     event.preventDefault()
   }
 
   render() {
+    const { fireRedirect } = this.state
+
+    if (fireRedirect) {
+      return <Redirect to={`/posts/${this.state.post.id}`} />
+    }
+
     return (
       <PostForm 
         handleFieldChange={(e) => this.handleFieldChange(e)} 
         handleSave={(e) => this.handleSave(e)} 
-        {...this.props.post} />
+        {...this.state.post} />
     )
   }
 }
