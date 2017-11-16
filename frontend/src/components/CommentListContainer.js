@@ -37,7 +37,9 @@ class CommentListContainer extends Component {
       return <Loading delay={200} type='spin' color='#222' className='loading' />
     }
 
-    const { comments } = this.props
+    let { comments } = this.props
+    comments = comments.filter((c) => c.deleted === false)
+    
     comments.sort((a,b) => a.voteScore <= b.voteScore)
 
     return (
