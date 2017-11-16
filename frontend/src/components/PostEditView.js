@@ -2,20 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { postUpdate } from '../actions/posts'
+import PostForm from './PostForm'
 
 class PostEditView extends Component {
   static PropTypes = {
-    post: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired
-    }).isRequired
+    post: PropTypes.object.isRequired
   }
 
   static defaultProps = {
     post: {}
   }
 
-  handleChange(event) {
+  handleFieldChange(event) {
     const field = event.target.id
     const post = this.props.post
     const value = event.target.value
@@ -30,22 +28,11 @@ class PostEditView extends Component {
   }
 
   render() {
-    const { title = '', body = '' } = this.props.post
-
     return (
-      <div className="form-group">
-        <form className="container" onSubmit={(e) => this.handleSave(e)}>
-          <label htmlFor='title'>Title</label>
-          <input id='title' type='text' className='form-control' value={title} onChange={(e) => this.handleChange(e)} />
-
-          <label htmlFor='body'>Body</label>
-          <textarea id='body' className='form-control' value={body} onChange={(e) => this.handleChange(e)} />
-
-          <br/>
-
-          <input type='submit' value='Save' className='btn btn-primary' />
-        </form>
-      </div>
+      <PostForm 
+        handleFieldChange={(e) => this.handleFieldChange(e)} 
+        handleSave={(e) => this.handleSave(e)} 
+        {...this.props.post} />
     )
   }
 }
