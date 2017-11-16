@@ -1,4 +1,3 @@
-// based on https://codepen.io/stowball/post/a-dummy-s-guide-to-redux-and-thunk-in-react
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from '../reducers'

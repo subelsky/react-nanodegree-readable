@@ -1,5 +1,3 @@
-// originally based on https://codepen.io/stowball/post/a-dummy-s-guide-to-redux-and-thunk-in-react
-
 import { 
   POSTS_HAS_ERRORED, 
   POSTS_IS_LOADING, 
