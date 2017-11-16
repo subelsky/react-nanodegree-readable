@@ -6,6 +6,7 @@ import { postUpdateScore, postDelete } from '../actions/posts'
 import { NavLink } from 'react-router-dom'
 import FaChevronCircleUp from 'react-icons/lib/fa/chevron-circle-up'
 import FaChevronCircleDown from 'react-icons/lib/fa/chevron-circle-down'
+import { Redirect } from 'react-router-dom'
 
 class PostViewHeader extends Component {
   static PropTypes = {
@@ -16,8 +17,21 @@ class PostViewHeader extends Component {
     deleted: PropTypes.bool.isRequired
   }
 
+  state = {
+    fireRedirect: false
+  }
+
+  onDelete() {
+    this.props.delete()
+    this.setState({ fireRedirect: true })
+  }
+
   render() {
     const { id, title, author, timestamp, voteScore, commentCount, deleted } = this.props
+
+    if (this.state.fireRedirect) {
+      return <Redirect to={'/'} />
+    }
 
     return (
     <div className='row'>
@@ -55,7 +69,7 @@ class PostViewHeader extends Component {
                   <NavLink key={'edit' + id} to={`/posts/${id}/edit`} className={'btn btn-info' + (deleted ? ' disabled' : '')}>
                     Edit
                   </NavLink>
-                  <button disabled={!!deleted} onClick={() => this.props.delete()} className='btn btn-danger'>
+                  <button disabled={!!deleted} onClick={() => this.onDelete()} className='btn btn-danger'>
                     Delete
                   </button>
                 </div>
