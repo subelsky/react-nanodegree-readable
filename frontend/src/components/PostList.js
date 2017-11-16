@@ -8,7 +8,7 @@ import { postsFetchData } from '../actions/posts'
 
 class PostList extends Component {
   state = {
-    sortValue: 'timestamp'
+    sortValue: 'voteScore'
   }
 
   static propTypes = {
@@ -27,8 +27,8 @@ class PostList extends Component {
     isLoading: false
   }
 
-  handleChange(sortValue) {
-    this.setState({ sortValue })
+  handleSortChange(event) {
+    this.setState({ sortValue: event.target.value })
   }
 
   componentDidMount() {
@@ -58,24 +58,17 @@ class PostList extends Component {
       return <Loading delay={200} type='spin' color='#222' className='loading' />
     }
 
-    let sortFunc
-
-    if (this.state.sortValue === 'voteScore') {
-      sortFunc = (postIdA,postIdB) => {
-        return posts[postIdA].voteScore <= posts[postIdB].voteScore
-      }
-    } else {
-      sortFunc = (postIdA,postIdB) => {
-        return posts[postIdA].timestamp <= posts[postIdB].timestamp
-      }
-    }
-
     const { posts } = this.props
     let postIds = Object.keys(posts)
     const visiblePostIds = postIds.filter((postId) => posts[postId].deleted !== true)
 
-    visiblePostIds.sort(sortFunc)
-    const sortedPosts = postIds.map((postId) => posts[postId])
+    if (this.state.sortValue === 'voteScore') {
+      visiblePostIds.sort((postIdA,postIdB) => posts[postIdA].voteScore <= posts[postIdB].voteScore)
+    } else {
+      visiblePostIds.sort((postIdA,postIdB) => posts[postIdA].timestamp <= posts[postIdB].timestamp)
+    }
+
+    const sortedPosts = visiblePostIds.map((postId) => posts[postId])
 
     return (
       [(
@@ -87,9 +80,9 @@ class PostList extends Component {
         <div className="col-md">
           <label>
             Sort By:
-            <select value={this.state.sortValue} onChange={(event) => this.handleChange(event.target.value)}>
-              <option value="voteScore">Vote Score</option>
-              <option value="timestamp">Timestamp</option>
+            <select value={this.state.sortValue} onChange={(e) => this.handleSortChange(e)}>
+              <option value="voteScore">Vote Score (Descending)</option>
+              <option value="timestamp">Timestamp (Ascending)</option>
             </select>
           </label>
         </div>
