@@ -1,5 +1,4 @@
 import { apiFetch, apiPost, apiDelete, apiPut } from '../utils/api'
-import { commentsFetchData } from './comments'
 
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
@@ -71,9 +70,6 @@ export function postsFetchData(category = null) {
       .then((posts) => {
         dispatch(postsIsLoading(false));
         dispatch(postsFetchDataSuccess(posts))
-        posts.forEach((post) => { 
-          dispatch(commentsFetchData(post.id))
-        })
       })
       .catch(() => dispatch(postsHasErrored(true)));
   }
@@ -121,7 +117,6 @@ export function postCreate(post) {
     const id = Math.random().toString(36).substr(2,9) // H/T https://gist.github.com/gordonbrander/2230317
     const timestamp = Date.now() / 1000 | 0
     const data = JSON.stringify({ ...post, id, timestamp })
-    console.info("CONSOLEDEBUG",data);
 
     apiPost(url,data)
       .then((post) => {
