@@ -3,20 +3,25 @@ import Loading from 'react-loading'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import CommentDetailRow from './CommentDetailRow'
+import { commentsFetchData } from '../actions/comments' 
 
 class CommentListContainer extends Component {
   static propTypes = {
-    postId: PropTypes.string,
-    fetchData: PropTypes.func,
-    comments: PropTypes.object,
-    hasErrored: PropTypes.bool,
-    isLoading: PropTypes.bool
+    postId: PropTypes.string.isRequired,
+    fetchData: PropTypes.func.isRequired,
+    comments: PropTypes.array.isRequired,
+    hasErrored: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
-    comments: {},
+    comments: [],
     hasErrored: false,
     isLoading: false
+  }
+
+  componentDidMount() {
+    this.props.fetchData(this.props.postId)
   }
 
   render() {
@@ -33,15 +38,13 @@ class CommentListContainer extends Component {
     }
 
     const { comments } = this.props
-
-    let commentIds = Object.keys(comments)
-    commentIds.sort((id_a,id_b) => comments[id_a].voteScore >= comments[id_b].voteScore)
+    comments.sort((a,b) => a.voteScore >= b.voteScore)
 
     return (
       <div className='row'>
         <div className='col-md'>
           <ul className='list-group'>
-            {commentIds.map((id) => <CommentDetailRow key={id} {...comments[id]} />)}
+            {comments.map((c) => <CommentDetailRow key={c.id} {...c} />)}
           </ul>
         </div>
       </div>
@@ -49,12 +52,30 @@ class CommentListContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return ({
-    comments: state.comments,
+const mapStateToProps = (state,ownProps) => {
+  const { postId } = ownProps
+  const { comments } = state
+
+  let commentIds = Object.keys(comments)
+
+  commentIds = commentIds.filter((commentId) => {
+    const comment = comments[commentId]
+    return comment.parentId === postId
+  })
+
+  const listComments = commentIds.map((commentId) => comments[commentId])
+
+  return {
+    comments: listComments,
     hasErrored: state.commentsHasErrored,
     isLoading: state.commentsIsLoading
-  })
+  }
 }
 
-export default connect(mapStateToProps)(CommentListContainer)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (postId) => dispatch(commentsFetchData(postId))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CommentListContainer)

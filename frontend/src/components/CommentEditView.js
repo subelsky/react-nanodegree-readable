@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { commentUpdate } from '../actions/comments'
+import CommentForm from './CommentForm'
 
 class commentEditView extends Component {
   static PropTypes = {
-    comment: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      body: PropTypes.string.isRequired
-    }).isRequired
+    comment: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -30,19 +28,11 @@ class commentEditView extends Component {
   }
 
   render() {
-    const { body = '' } = this.props.comment
-
     return (
-      <div className="form-group">
-        <form className="container" onSubmit={(e) => this.handleSave(e)}>
-          <label htmlFor='body'>Comment Text</label>
-          <textarea id='body' className='form-control' value={body} onChange={(e) => this.handleChange(e)} />
-
-          <br/>
-
-          <input type='submit' value='Save' className='btn btn-primary' />
-        </form>
-      </div>
+      <CommentForm 
+        onChange={(e) => this.handleChange(e)}
+        onSave={(e) => this.handleSave(e)} 
+        { ...this.props.comment } />
     )
   }
 }
@@ -55,10 +45,10 @@ const mapStateToProps = (state,ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch,ownProps) => {
-  const { viewCommentId } = ownProps.match.params
+  const { editCommentId } = ownProps.match.params
 
   return {
-    update: (commentData) => dispatch(commentUpdate(viewCommentId,commentData))
+    update: (commentData) => dispatch(commentUpdate(editCommentId,commentData))
   }
 }
   
