@@ -6,7 +6,8 @@ import {
   POSTS_FETCH_DATA_SUCCESS ,
   POST_HAS_ERRORED, 
   POST_IS_LOADING, 
-  POST_UPDATE_SUCCESS
+  POST_UPDATE_SUCCESS,
+  POST_CREATE_SUCCESS
 } from '../actions/posts'
 
 export function postHasErrored(state = false,action) {
@@ -47,6 +48,11 @@ export function postsIsLoading(state = false,action) {
 
 export function posts(state = {},action) {
   switch (action.type) {
+    case POST_CREATE_SUCCESS:
+      return {
+        ...state,
+          [action.post.id]: action.post
+      }
     case POSTS_FETCH_DATA_SUCCESS:
       const posts = action.posts.reduce((map,p) => {
         map[p.id] = p

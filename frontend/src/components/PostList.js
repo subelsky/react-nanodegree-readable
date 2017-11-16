@@ -117,6 +117,10 @@ class PostList extends Component {
           </table>
         </div>
       </div>
+      ),(
+      <NavLink key='NewPost' to={'/posts/new'} className='btn btn-primary'>
+        New Post
+      </NavLink>
     )])
   }
 }

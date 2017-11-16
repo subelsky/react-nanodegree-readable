@@ -10,6 +10,7 @@ export const POST_IS_LOADING = 'POST_IS_LOADING'
 export const POST_FETCH_DATA_SUCCESS = 'POST_FETCH_DATA_SUCCESS'
 
 export const POST_UPDATE_SUCCESS = 'POST_UPDATE_SUCCESS'
+export const POST_CREATE_SUCCESS = 'POST_CREATE_SUCCESS'
 
 export function postHasErrored(bool) {
   return {
@@ -43,6 +44,13 @@ export function postsFetchDataSuccess(posts) {
   return {
     type: POSTS_FETCH_DATA_SUCCESS,
     posts
+  }
+}
+
+export function postCreateSuccess(post) {
+  return {
+    type: POST_CREATE_SUCCESS,
+    post
   }
 }
 
@@ -103,6 +111,21 @@ export function postUpdate(postId,post) {
     apiPut(url,data)
       .then((post) => {
         dispatch(postUpdateSuccess(post))
+      })
+  }
+}
+
+export function postCreate(post) {
+  return (dispatch) => {
+    const url = '/posts'
+    const id = Math.random().toString(36).substr(2,9) // H/T https://gist.github.com/gordonbrander/2230317
+    const timestamp = Date.now() / 1000 | 0
+    const data = JSON.stringify({ ...post, id, timestamp })
+    console.info("CONSOLEDEBUG",data);
+
+    apiPost(url,data)
+      .then((post) => {
+        dispatch(postCreateSuccess(post))
       })
   }
 }
