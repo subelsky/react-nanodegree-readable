@@ -51,7 +51,6 @@ const mapStateToProps = (state,ownProps) => {
   const { editCommentId } = ownProps.match.params
   const comment = state.comments[editCommentId]
 
-  console.info("CONSOLEDEBUG",editCommentId,state.comments);
   return { comment }
 }
 
