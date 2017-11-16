@@ -9,10 +9,12 @@ import { Provider } from 'react-redux'
 import configureStore from './store/ConfigureStore';
 import { postsFetchData } from './actions/posts'
 import { commentsFetchData } from './actions/comments'
+import { categoriesFetchData } from './actions/categories'
 
 const store = configureStore()
 store.dispatch(postsFetchData())
 store.dispatch(commentsFetchData())
+store.dispatch(categoriesFetchData())
 
 ReactDOM.render(
   <BrowserRouter>
