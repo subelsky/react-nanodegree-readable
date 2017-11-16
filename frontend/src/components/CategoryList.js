@@ -17,10 +17,6 @@ class CategoryList extends Component {
     categories: []
   }
 
-  componentDidMount() {
-    this.props.fetchData()
-  }
-
   // structure based on https://github.com/stowball/dummys-guide-to-redux-and-thunk-react/blob/master/src/components/ItemList.js
   render() {
     if (this.props.hasErrored) { 
