@@ -38,7 +38,7 @@ class CommentListContainer extends Component {
     }
 
     const { comments } = this.props
-    comments.sort((a,b) => a.voteScore >= b.voteScore)
+    comments.sort((a,b) => a.voteScore <= b.voteScore)
 
     return (
       <div className='row'>
