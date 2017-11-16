@@ -7,7 +7,7 @@ import { commentsFetchData } from '../actions/comments'
 
 class CommentListContainer extends Component {
   static propTypes = {
-    postId: PropTypes.string.isRequired,
+    postId: PropTypes.string,
     fetchData: PropTypes.func.isRequired,
     comments: PropTypes.array.isRequired,
     hasErrored: PropTypes.bool.isRequired,

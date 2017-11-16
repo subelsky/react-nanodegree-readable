@@ -4,6 +4,7 @@ export const COMMENTS_HAS_ERRORED = 'COMMENTS_HAS_ERRORED'
 export const COMMENTS_IS_LOADING = 'COMMENTS_IS_LOADING'
 export const COMMENTS_FETCH_DATA_SUCCESS = 'COMMENTS_FETCH_DATA_SUCCESS'
 export const COMMENT_UPDATE_SCORE_SUCCESS = 'COMMENT_UPDATE_SCORE_SUCCESS'
+export const COMMENT_CREATE_SUCCESS = 'COMMENT_CREATE_SUCCESS'
 
 export function commentsHasErrored(bool) {
   return {
@@ -33,6 +34,13 @@ export function commentUpdateSuccess(comment) {
   }
 }
 
+export function commentCreateSuccess(parentId,comment) {
+  return {
+    type: COMMENT_CREATE_SUCCESS,
+    parentId,
+    comment
+  }
+}
 export function commentsFetchData(postId) {
   return (dispatch) => {
     dispatch(commentsIsLoading(true));
@@ -73,6 +81,28 @@ export function commentUpdate(commentId,comment) {
       })
   }
 }
+
+export function commentCreate(parentId,comment) {
+  return (dispatch) => {
+    const { body, author } = comment
+    const timestamp = Date.now() / 1000 | 0
+    const id = Math.random().toString(36).substr(2,9) // H/T https://gist.github.com/gordonbrander/2230317
+
+    const data = JSON.stringify({ 
+      id,
+      timestamp, 
+      body,
+      author,
+      parentId
+    })
+
+    apiPost('/comments',data)
+      .then((comment) => {
+        dispatch(commentCreateSuccess(parentId,comment))
+      })
+  }
+}
+
 export function commentDelete(commentId) {
   return (dispatch) => {
     const url = `/comments/${commentId}/`

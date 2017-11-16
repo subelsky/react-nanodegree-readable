@@ -2,7 +2,8 @@ import {
   COMMENTS_HAS_ERRORED, 
   COMMENTS_IS_LOADING, 
   COMMENTS_FETCH_DATA_SUCCESS,
-  COMMENT_UPDATE_SCORE_SUCCESS
+  COMMENT_UPDATE_SCORE_SUCCESS,
+  COMMENT_CREATE_SUCCESS
 } from '../actions/comments'
 
 export function commentsHasErrored(state = false,action) {
@@ -25,6 +26,14 @@ export function commentsIsLoading(state = false,action) {
 
 export function comments(state = {},action) {
   switch (action.type) {
+    case COMMENT_CREATE_SUCCESS:
+      const comment = action.comment
+      comment.parentId = action.parentId
+
+      return {
+        ...state,
+          [comment.id]: comment
+      }
     case COMMENTS_FETCH_DATA_SUCCESS:
       const comments = action.comments.reduce((map,c) => {
         map[c.id] = c
@@ -33,11 +42,9 @@ export function comments(state = {},action) {
 
       return comments
     case COMMENT_UPDATE_SCORE_SUCCESS:
-      const comment = action.comment
-
       return {
         ...state, 
-          [comment.id]: comment
+          [action.comment.id]: action.comment
       }
     default:
       return state

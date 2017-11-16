@@ -6,6 +6,7 @@ import PostListContainer from './components/PostListContainer'
 import PostEditView from './components/PostEditView'
 import PostNewView from './components/PostNewView'
 import CommentEditView from './components/CommentEditView'
+import CommentNewView from './components/CommentNewView'
 import './App.css'
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
           <Switch>
             <Route path="/posts/:viewPostId/edit" component={PostEditView} />
             <Route path="/posts/new" component={PostNewView} />
+            <Route path="/posts/:postId/comments/new" component={CommentNewView} />
             <Route path="/posts/:viewPostId" component={PostViewContainer} />
             <Route path="/comments/:editCommentId/edit" component={CommentEditView} />
             <Route component={PostListContainer} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Loading from 'react-loading'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 import PostViewHeader from './PostViewHeader'
 import PostViewBody from './PostViewBody'
 import CommentListContainer from './CommentListContainer'
@@ -41,6 +42,7 @@ class PostViewContainer extends Component {
     return ([
       <PostViewHeader key={'PostViewHeader' + id} id={id} {...headerProps} />,
       <PostViewBody key={'PostViewBody' + id} body={body} />,
+      <NavLink key={'NewComment'} to={`/posts/${id}/comments/new`} className='btn btn-secondary'>New Comment</NavLink>,
       <CommentListContainer key={'CommentListContainer' + id} postId={id} />
     ])
   }

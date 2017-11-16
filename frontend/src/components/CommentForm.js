@@ -1,12 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CommentForm = ({ body = '', onChange, onSave }) => {
+const CommentForm = ({ body = '', author = '', onChange, onSave }) => {
   return (
     <div className="form-group">
       <form className="container" onSubmit={onSave}>
         <label htmlFor='body'>Comment Text</label>
         <textarea id='body' className='form-control' value={body} onChange={onChange} />
+
+        <label htmlFor='author'>Author</label>
+        <input id='author' className='form-control' type='text' value={author} onChange={onChange} />
 
         <br/>
 
