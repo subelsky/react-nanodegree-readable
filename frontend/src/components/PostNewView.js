@@ -37,9 +37,7 @@ class PostNewView extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch,ownProps) => {
-  const { viewPostId } = ownProps.match.params
-
+const mapDispatchToProps = (dispatch) => {
   return {
     create: (postData) => dispatch(postCreate(postData))
   }
