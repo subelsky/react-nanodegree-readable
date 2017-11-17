@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import Timestamp from 'react-timestamp'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { postUpdateScore, postDelete } from '../actions/posts'
 import { NavLink } from 'react-router-dom'
-import FaChevronCircleUp from 'react-icons/lib/fa/chevron-circle-up'
-import FaChevronCircleDown from 'react-icons/lib/fa/chevron-circle-down'
-import { Redirect } from 'react-router-dom'
+import VoteScore from './VoteScore'
 
 class PostViewHeader extends Component {
   static PropTypes = {
@@ -44,13 +43,7 @@ class PostViewHeader extends Component {
             <tr>
               <th scope='row'>Vote Score</th>
               <td>
-                <button onClick={() => this.props.upVote()}>
-                  <FaChevronCircleUp />
-                </button>
-                <button onClick={() => this.props.downVote()}>
-                  <FaChevronCircleDown />
-                </button>
-                <span className="badge badge-pill badge-primary">{voteScore}</span> points
+                <VoteScore score={voteScore} upVote={this.props.upVote} downVote={this.props.downVote} />
               </td>
             </tr>
             <tr><th scope='row'># Comments</th><td>{commentCount}</td></tr>
