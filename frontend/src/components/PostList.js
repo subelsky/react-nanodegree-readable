@@ -96,7 +96,9 @@ class PostList extends Component {
             <thead className='thead-dark'>
               <tr>
                 <th scope='col'>Title</th>
+                <th scope='col'>Author</th>
                 <th scope='col'>Created At</th>
+                <th scope='col'># Comments</th>
                 <th scope='col'>Vote Score</th>
               </tr>
               </thead>
@@ -108,7 +110,9 @@ class PostList extends Component {
                         {post.title}
                       </NavLink>
                     </td>
+                    <td>{post.author}</td>
                     <td><Timestamp time={post.timestamp/1000} /></td>
+                    <td>{post.commentCount}</td>
                     <td>{post.voteScore}</td>
                   </tr>
                 ))}
