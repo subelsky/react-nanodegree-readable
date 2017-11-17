@@ -23,7 +23,7 @@ class App extends Component {
             <Route path="/posts/:viewPostId/edit" component={PostEditView} />
             <Route path="/posts/new" component={PostNewView} />
             <Route path="/posts/:postId/comments/new" component={CommentNewView} />
-            <Route path="/posts/:viewPostId" component={PostViewContainer} />
+            <Route path="/:category/:viewPostId" component={PostViewContainer} />
             <Route path="/comments/:editCommentId/edit" component={CommentEditView} />
             <Route component={PostListContainer} />
           </Switch>

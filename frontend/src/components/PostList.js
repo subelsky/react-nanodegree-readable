@@ -107,7 +107,7 @@ class PostList extends Component {
                 {sortedPosts.map((post) => (
                   <tr key={post.id}>
                     <td>
-                      <NavLink key={post.id + 'PostLink'} to={'/posts/' + post.id}>
+                      <NavLink key={post.id + 'PostLink'} to={`/${post.category}/${post.id}`}>
                         {post.title}
                       </NavLink>
                     </td>
