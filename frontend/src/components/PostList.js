@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Timestamp from 'react-timestamp'
-import { postsFetchData } from '../actions/posts'
+import { postUpdateScore, postsFetchData } from '../actions/posts'
+import VoteScore from './VoteScore'
 
 class PostList extends Component {
   state = {
@@ -113,7 +114,11 @@ class PostList extends Component {
                     <td>{post.author}</td>
                     <td><Timestamp time={post.timestamp/1000} /></td>
                     <td>{post.commentCount}</td>
-                    <td>{post.voteScore}</td>
+                    <td>
+                      <VoteScore score={post.voteScore} 
+                                 upVote={() => this.props.upVote(post.id)} 
+                                 downVote={() => this.props.downVote(post.id)} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -138,7 +143,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: (category) => dispatch(postsFetchData(category))
+    fetchData: (category) => dispatch(postsFetchData(category)),
+    upVote:    (postId)   => dispatch(postUpdateScore(postId,'upVote')),
+    downVote:  (postId)   => dispatch(postUpdateScore(postId,'downVote')),
   }
 }
 
