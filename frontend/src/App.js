@@ -8,6 +8,7 @@ import PostNewView from './components/PostNewView'
 import CommentEditView from './components/CommentEditView'
 import CommentNewView from './components/CommentNewView'
 import './App.css'
+import NotFound from './components/NotFound'
 
 class App extends Component {
   state = {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path="/posts/:postId/comments/new" component={CommentNewView} />
             <Route path="/:category/:viewPostId" component={PostViewContainer} />
             <Route path="/comments/:editCommentId/edit" component={CommentEditView} />
+            <Route path="/notfound" component={NotFound}/>
             <Route component={PostListContainer} />
           </Switch>
         </main>

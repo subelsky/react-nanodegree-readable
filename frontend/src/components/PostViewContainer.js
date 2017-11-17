@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Loading from 'react-loading'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { Redirect, NavLink } from 'react-router-dom'
 import PostViewHeader from './PostViewHeader'
 import PostViewBody from './PostViewBody'
 import CommentListContainer from './CommentListContainer'
@@ -13,18 +13,22 @@ class PostViewContainer extends Component {
       params: PropTypes.object.isRequired
     }).isRequired,
 
-    post: PropTypes.object.isRequired,
+    post: PropTypes.object,
     hasErrored: PropTypes.bool.required,
     isLoading: PropTypes.bool.required
   }
 
   static defaultProps = {
-    post: {},
     hasErrored: false,
     isLoading: false
   }
 
   render() {
+    if (this.props.post === undefined) {
+      return <Redirect to={'/notfound'} />
+    }
+
+    console.info("CONSOLEDEBUG",this.props.post);
     if (this.props.hasErrored) { 
       return (
         <div className="alert alert-danger" role="alert">
